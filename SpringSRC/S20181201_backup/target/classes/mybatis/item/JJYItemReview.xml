@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JJYItemReview">
+  <resultMap id="JJYItemReviewResult"  type="JJYComments">
+  
+  </resultMap>
+  
+  <select id="JJYCommentsTotal" parameterType="JJYComments" resultType="int">
+  	select count(*) from comments where mainno=#{mainNo} and ref_table=#{ref_Table}
+  </select>
+  
+  <select id="JJYCommentList" parameterType="JJYComments" resultType="JJYComments">
+    select * from (select rownum rn, a.* from (select * from comments
+   	where mainno=#{mainNo} and ref_table=#{ref_Table} order by subno desc) a) where rn between #{start} and #{end}   	
+  </select>
+  
+  <insert id="JJYCommentWrite">
+  	insert into comments (mainno, subno, ref_table, ispublic, hits, ref, re_level, content, content2, content3, rating, memberid, regdate)
+	values (#{mainNo},  fn_MaxNoForTable('comments',#{ref_Table},#{mainNo}), #{ref_Table}, #{isPublic}, #{hits}, #{ref}, #{re_Level}, #{content}, #{content2}, #{content3}, #{rating}, #{memberId}, fn_datetochar(sysdate))
+  </insert>
+   
+   <select id="JJYCommentSelect" parameterType="JJYComments" resultType="JJYComments">
+   	select * from comments where mainNo=#{mainNo} and subNo=#{subNo} and ref_Table=#{ref_Table}
+   </select>
+  
+  
+<!--   <select id="KISItemContent" parameterType="int" resultType="KISItem"> -->
+<!--   	select * from iteminfo where itemNo = #{itemNo} -->
+<!--   </select> -->
+  
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NYSCategory">
+	<resultMap id="NYSCateResult" type="NYSCategory">
+		<result property="categoryNo" column="categoryNo"/>
+		<result property="name" column="name"/>
+		<result property="parent" column="parent"/>
+		<result property="isPublic" column="isPublic"/>
+		<result property="division" column="division"/>
+	</resultMap>
+
+	<select id="NYSCateList" parameterType="NYSCategory" resultMap="NYSCateResult">
+<!-- 		select * from (select rownum rn, a.* from (select * from category order by categoryNo) a) where rn between #{start} and #{end} -->
+<!-- 		select * from category order by parent, division -->
+		select * from (select rownum rn, a.* from (select * from category order by parent, division) a) where rn between #{start} and #{end}
+	</select>
+
+	<select id="NYSCateTotal" resultType="int">
+		select count(*) from category
+	</select>
+	
+</mapper>

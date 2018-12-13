@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Category">
+	<resultMap id="CategoryResult" type="Category">
+		<result property="categoryNo" column="categoryNo"/>
+		<result property="name" column="name"/>
+		<result property="parent" column="parent"/>
+		<result property="isPublic" column="isPublic"/>
+		<result property="division" column="division"/>
+	</resultMap>
+
+	<!-- 윤선 -->
+	<select id="NYSCateList" parameterType="Category" resultMap="CategoryResult">
+<!-- 		select * from (select rownum rn, a.* from (select * from category order by categoryNo) a) where rn between #{start} and #{end} -->
+<!-- 		select * from category order by parent, division -->
+		select * from (select rownum rn, a.* from (select * from category order by parent, division) a) where rn between #{start} and #{end}
+	</select>
+	
+	<select id="NYSCateParList" parameterType="Category" resultMap="CategoryResult">
+		select * from category where division='0'
+	</select>
+	
+	<select id="NYSCateTotal" resultType="int">
+		select count(*) from category
+	</select>
+	
+	<select id="NYSCateDetail" parameterType="int" resultType="Category">
+		select * from category where categoryNo=#{categoryNo}
+	</select>
+	
+	<select id="NYSCateDetail2" parameterType="Category" resultType="Category">
+		select * from category where name=#{name}
+	</select>
+
+	
+	<update id="NYSCateUpdate" parameterType="Category">
+		update category set name=#{name}, parent=#{parent}, isPublic=#{isPublic}, division=#{division} where categoryNo=#{categoryNo}
+	</update>
+	
+	<delete id="NYSCateDelete" parameterType="int">
+		delete from category where categoryNo=#{categoryNo}
+	</delete>
+	
+	<insert id="NYSCateInsert" parameterType="Category">
+		insert into category values(fn_MaxNoForTable('category'), #{name}, #{parent}, #{isPublic}, #{division})
+	</insert>
+	
+	
+	<!-- 인선 -->
+	<select id="parentCate" resultType="Category">
+		select name from category where division='0' and isPublic='1'
+	</select>
+	
+	<select id="childCate" resultType="Category">
+<!-- 		select name from category where parent is not null -->
+		select name from category where parent=#{parent}
+	</select>
+	
+	
+</mapper>

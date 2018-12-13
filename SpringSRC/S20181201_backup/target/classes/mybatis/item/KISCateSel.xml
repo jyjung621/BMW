@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CateSel">
+	<resultMap id="CateSelResult" type="CateSel">
+		<result property="categoryNo" column="categoryNo"/>
+		<result property="name" column="name"/>
+		<result property="parent" column="parent"/>
+		<result property="isPublic" column="isPublic"/>
+		<result property="division" column="division"/>
+	</resultMap>
+
+	<select id="parentCate" resultType="CateSel">
+		select name from category where division='0' and isPublic='1'
+	</select>
+	
+	<select id="childCate" resultType="CateSel">
+<!-- 		select name from category where parent is not null -->
+		select name from category where parent=#{parent}
+	</select>
+	
+</mapper>

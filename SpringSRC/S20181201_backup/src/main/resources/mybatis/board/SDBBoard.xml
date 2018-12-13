@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SDBBoard">
+  <resultMap id="SDBBoardResult"  type="SDBBoard">
+    <result property="boardNo" column="boardNo"/>
+    <result property="boardCategory" column="boardCategory"/>
+    <result property="title" column="title"/>
+    <result property="content" column="content"/>
+    <result property="viewGrade" column="viewGrade"/>
+    <result property="isPublic" column="isPublic"/>
+    <result property="hits" column="hits"/>
+    <result property="memberId" column="memberId"/>
+    <result property="regDate" column="regDate"/>
+  </resultMap>
+  
+   <select id="SDBBoardList" parameterType="SDBBoard" resultMap="SDBBoardResult">
+      select * from (select rownum rn, a.* from (select * from board
+    	 order by boardNo) a) where rn between #{start} and #{end}   	
+   </select>
+   
+  <select id="SDBBoardTotal" resultType="int">
+  	select count(*) from board
+  </select>
+
+</mapper>

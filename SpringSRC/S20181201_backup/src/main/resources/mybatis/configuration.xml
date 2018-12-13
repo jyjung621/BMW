@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<!-- 동범 -->
+		<typeAlias alias="SDBBoard" type="oracle.java.bmw.model.Board"/>
+		<!-- 인선 -->
+		<typeAlias alias="KISIngt" type="oracle.java.bmw.model.Ingredient"/>
+		<typeAlias alias="KISItem" type="oracle.java.bmw.model.ItemInfo"/>
+		<!-- 윤선 -->
+		<typeAlias alias="NYSCategory" type="oracle.java.bmw.model.Category"/>		
+		<!-- 재연 -->
+		<typeAlias alias="JJYComments" type="oracle.java.bmw.model.CommentsJJY"/>
+		<typeAlias alias="JJYItem" type="oracle.java.bmw.model.ItemInfoJJY"/>
+		
+	</typeAliases>
+	<mappers>
+		<!-- 동범 -->
+		<mapper resource="mybatis/board/SDBBoard.xml" />
+		<!-- 인선 -->
+		<mapper resource="mybatis/item/KISIngt.xml" />
+		<mapper resource="mybatis/item/KISItem.xml" />
+		<!-- 윤선 -->
+		<mapper resource="mybatis/item/NYSCategory.xml" />		
+		<!-- 재연 -->
+		<mapper resource="mybatis/item/JJYItemReview.xml" />
+		
+	</mappers>
+</configuration>
+

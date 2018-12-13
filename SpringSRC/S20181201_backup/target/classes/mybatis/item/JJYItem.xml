@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JJYItem">
+  <resultMap id="JJYItemRatingResult"  type="JJYItem">
+  	
+  </resultMap>
+  
+  <select id="JJYSelectRating" parameterType="JJYComments" resultType="JJYItem">
+  	select sum(rating) as ratingSum, count(rating) as ratingCnt from comments
+  	where mainNo=#{mainNo} and ref_Table=#{ref_Table}
+  </select>
+  <update id="JJYItemRatingUpdate" parameterType="JJYItem">
+  	update iteminfo set rating=#{rating} where itemNo=#{itemNo}
+  </update>
+  
+
+
+</mapper>
